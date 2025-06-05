@@ -39,6 +39,22 @@ const routes = [
   },
   {
     meta: {
+      title: 'Kubectl console',
+    },
+    path: '/kubectl',
+    name: 'kubectl',
+    component: () => import('@/views/KubectlView.vue'),
+  },
+  {
+    meta: {
+      title: 'Apply YAML',
+    },
+    path: '/apply',
+    name: 'apply',
+    component: () => import('@/views/KubeYamlEditor.vue'),
+  },
+  {
+    meta: {
       title: 'Forms',
     },
     path: '/forms',

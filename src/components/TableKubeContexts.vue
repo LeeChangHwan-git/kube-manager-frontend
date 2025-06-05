@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onUnmounted } from 'vue'
 import { mdiCheck, mdiClose } from '@mdi/js'
 import PillTag from '@/components/PillTag.vue'
 import CardBoxModal from '@/components/CardBoxModal.vue'
@@ -12,8 +12,17 @@ const expandedRows = ref({})
 const deleteModalActive = ref(false)
 const selectedContext = ref(null)
 
+const contextMenuVisible = ref(false)
+const contextMenuPos = ref({ x: 0, y: 0 })
+const contextMenuCtx = ref(null)
+
 onMounted(() => {
   kubeStore.fetchContexts()
+  document.addEventListener('click', hideContextMenu)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', hideContextMenu)
 })
 
 const toggleRow = async (ctx) => {
@@ -25,6 +34,23 @@ const toggleRow = async (ctx) => {
 
 const openDeleteModal = (ctx) => {
   selectedContext.value = ctx.name
+  deleteModalActive.value = true
+}
+
+const hideContextMenu = () => {
+  contextMenuVisible.value = false
+}
+
+const showContextMenu = (event, ctx) => {
+  event.preventDefault()
+  contextMenuCtx.value = ctx
+  contextMenuPos.value = { x: event.clientX, y: event.clientY }
+  contextMenuVisible.value = true
+}
+
+const chooseDelete = () => {
+  selectedContext.value = contextMenuCtx.value.name
+  contextMenuVisible.value = false
   deleteModalActive.value = true
 }
 
@@ -53,7 +79,7 @@ const confirmDelete = async () => {
     </thead>
     <tbody>
       <template v-for="ctx in kubeStore.contexts" :key="ctx.name">
-        <tr @click="toggleRow(ctx)" @contextmenu.prevent="openDeleteModal(ctx)">
+        <tr @click="toggleRow(ctx)" @contextmenu="showContextMenu($event, ctx)">
           <td data-label="Name">{{ ctx.name }}</td>
           <td data-label="Current">
             <PillTag
@@ -81,4 +107,18 @@ const confirmDelete = async () => {
       </template>
     </tbody>
   </table>
+  <div
+    v-if="contextMenuVisible"
+    class="fixed bg-white dark:bg-slate-800 border rounded shadow z-50"
+    :style="{ top: contextMenuPos.y + 'px', left: contextMenuPos.x + 'px' }"
+  >
+    <ul>
+      <li
+        class="px-3 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700"
+        @click="chooseDelete"
+      >
+        Delete
+      </li>
+    </ul>
+  </div>
 </template>

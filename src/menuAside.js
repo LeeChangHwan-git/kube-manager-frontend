@@ -7,6 +7,7 @@ import {
   mdiSquareEditOutline,
   mdiTable,
   mdiCog,
+  mdiConsole,
   mdiTelevisionGuide,
   mdiResponsive,
   mdiPalette,
@@ -30,6 +31,14 @@ export default [
         icon: mdiCog,
       },
       {
+        to: '/kubectl',
+        label: 'Kubectl',
+        icon: mdiConsole,
+      },
+      {
+        to: '/apply',
+        label: 'Apply YAML',
+        icon: mdiSquareEditOutline,
         label: 'Item Two',
       },
     ],
