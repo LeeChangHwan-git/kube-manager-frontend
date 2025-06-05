@@ -39,7 +39,7 @@ export default [
         to: '/apply',
         label: 'Apply YAML',
         icon: mdiSquareEditOutline,
-        label: 'Item Two',
+        label: 'Apply File',
       },
     ],
   },
