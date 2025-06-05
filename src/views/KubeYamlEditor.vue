@@ -6,7 +6,7 @@ import SectionMain from '@/components/SectionMain.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import FormField from '@/components/FormField.vue'
 import FormControl from '@/components/FormControl.vue'
-import { MonacoEditor } from '@monaco-editor/vue'
+import { MonacoEditor } from '@guolao/vue-monaco-editor'
 
 const yamlContent = ref('')
 const namespace = ref('default')
