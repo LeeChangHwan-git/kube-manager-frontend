@@ -45,6 +45,17 @@ export const useKubeStore = defineStore('kube', () => {
     }
   }
 
+  async function useContext(name) {
+    try {
+      await axios.post('http://localhost:8080/api/context/use', {
+        contextName: name,
+      })
+      await fetchContexts()
+    } catch (err) {
+      alert(err.message)
+    }
+  }
+
   return {
     contexts,
     contextDetails,
@@ -52,5 +63,6 @@ export const useKubeStore = defineStore('kube', () => {
     fetchContextDetail,
     deleteContext,
     addConfig,
+    useContext,
   }
 })

@@ -41,7 +41,9 @@ const fetchFileContent = async (path) => {
     }
     const data = await res.json()
     if (data && !Array.isArray(data)) {
-      fileContent.value = atob(data.content)
+      const binary = atob(data.content)
+      const bytes = Uint8Array.from(binary, (ch) => ch.charCodeAt(0))
+      fileContent.value = new TextDecoder('utf-8').decode(bytes)
     }
   } catch (err) {
     fileContent.value = `Error: ${err.message}`

@@ -54,6 +54,12 @@ const chooseDelete = () => {
   deleteModalActive.value = true
 }
 
+const chooseChange = async () => {
+  if (!contextMenuCtx.value) return
+  await kubeStore.useContext(contextMenuCtx.value.name)
+  contextMenuVisible.value = false
+}
+
 const confirmDelete = async () => {
   await kubeStore.deleteContext(selectedContext.value)
   deleteModalActive.value = false
@@ -113,6 +119,12 @@ const confirmDelete = async () => {
     :style="{ top: contextMenuPos.y + 'px', left: contextMenuPos.x + 'px' }"
   >
     <ul>
+      <li
+        class="px-3 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700"
+        @click="chooseChange"
+      >
+        Change
+      </li>
       <li
         class="px-3 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700"
         @click="chooseDelete"
