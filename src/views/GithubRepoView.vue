@@ -67,23 +67,25 @@ const fetchFileContent = async (path) => {
         </FormField>
         <BaseButton type="submit" label="Load Repository" />
       </form>
-      <div v-if="repoLoaded" class="mt-4">
-        <RepoFileTree
-          :repo-url="repoUrl"
-          :username="username"
-          :password="password"
-          @file-click="fetchFileContent"
-        />
-      </div>
+      <div v-if="repoLoaded" class="mt-4 flex space-x-4">
+        <div class="w-1/3 overflow-auto">
+          <RepoFileTree
+            :repo-url="repoUrl"
+            :username="username"
+            :password="password"
+            @file-click="fetchFileContent"
+          />
+        </div>
 
-      <div v-if="fileContent" class="mt-4">
-        <MonacoEditor
-          v-model:value="fileContent"
-          language="plaintext"
-          theme="vs-dark"
-          height="400px"
-          :options="{ readOnly: true, scrollBeyondLastLine: false }"
-        />
+        <div v-if="fileContent" class="w-2/3">
+          <MonacoEditor
+            v-model:value="fileContent"
+            language="plaintext"
+            theme="vs-dark"
+            height="800px"
+            :options="{ readOnly: true, scrollBeyondLastLine: false }"
+          />
+        </div>
       </div>
     </SectionMain>
   </LayoutAuthenticated>
