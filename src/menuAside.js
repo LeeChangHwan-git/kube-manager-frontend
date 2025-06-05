@@ -44,6 +44,11 @@ export default [
     ],
   },
   {
+    to: '/github',
+    label: 'GitHub Repo',
+    icon: mdiGithub,
+  },
+  {
     to: '/tables',
     label: 'Tables',
     icon: mdiTable,
@@ -82,12 +87,6 @@ export default [
     to: '/error',
     label: 'Error',
     icon: mdiAlertCircle,
-  },
-  {
-    href: 'https://github.com/justboil/admin-one-vue-tailwind',
-    label: 'GitHub',
-    icon: mdiGithub,
-    target: '_blank',
   },
   {
     href: 'https://github.com/justboil/admin-one-react-tailwind',

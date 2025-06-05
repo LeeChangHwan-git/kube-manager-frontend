@@ -87,6 +87,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'GitHub Repo',
+    },
+    path: '/github',
+    name: 'github',
+    component: () => import('@/views/GithubRepoView.vue'),
+  },
+  {
+    meta: {
       title: 'Login',
     },
     path: '/login',

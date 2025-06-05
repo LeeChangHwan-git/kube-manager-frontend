@@ -68,6 +68,12 @@ export default [
   },
   {
     icon: mdiGithub,
+    label: 'GitHub Repo',
+    isDesktopNoLabel: true,
+    to: '/github',
+  },
+  {
+    icon: mdiGithub,
     label: 'GitHub',
     isDesktopNoLabel: true,
     href: 'https://github.com/justboil/admin-one-vue-tailwind',
