@@ -31,6 +31,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'KubeConfig',
+    },
+    path: '/kubeconfig',
+    name: 'kubeconfig',
+    component: () => import('@/views/KubeConfigView.vue'),
+  },
+  {
+    meta: {
       title: 'Forms',
     },
     path: '/forms',

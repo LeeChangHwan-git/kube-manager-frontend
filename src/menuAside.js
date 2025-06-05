@@ -6,11 +6,12 @@ import {
   mdiAlertCircle,
   mdiSquareEditOutline,
   mdiTable,
-  mdiViewList,
+  mdiCog,
   mdiTelevisionGuide,
   mdiResponsive,
   mdiPalette,
   mdiReact,
+  mdiKubernetes,
 } from '@mdi/js'
 
 export default [
@@ -18,6 +19,20 @@ export default [
     to: '/dashboard',
     icon: mdiMonitor,
     label: 'Dashboard',
+  },
+  {
+    label: 'Kubernetes',
+    icon: mdiKubernetes,
+    menu: [
+      {
+        to: '/kubeconfig',
+        label: 'KubeConfig',
+        icon: mdiCog,
+      },
+      {
+        label: 'Item Two',
+      },
+    ],
   },
   {
     to: '/tables',
@@ -58,18 +73,6 @@ export default [
     to: '/error',
     label: 'Error',
     icon: mdiAlertCircle,
-  },
-  {
-    label: 'Dropdown',
-    icon: mdiViewList,
-    menu: [
-      {
-        label: 'Item One',
-      },
-      {
-        label: 'Item Two',
-      },
-    ],
   },
   {
     href: 'https://github.com/justboil/admin-one-vue-tailwind',
