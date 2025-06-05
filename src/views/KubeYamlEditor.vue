@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import axios from 'axios'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionMain from '@/components/SectionMain.vue'
@@ -7,6 +7,7 @@ import BaseButton from '@/components/BaseButton.vue'
 import FormField from '@/components/FormField.vue'
 import FormControl from '@/components/FormControl.vue'
 import MonacoEditor from '@guolao/vue-monaco-editor'
+import { useYamlStore } from '@/stores/yaml.js'
 
 const yamlContent = ref(`apiVersion: v1
 kind: Pod
@@ -24,6 +25,17 @@ const namespace = ref('default')
 const dryRun = ref(false)
 const isLoading = ref(false)
 const result = ref('')
+const yamlStore = useYamlStore()
+
+watch(
+  () => yamlStore.selectedYaml,
+  (val) => {
+    if (val) {
+      yamlContent.value = val
+      yamlStore.clear()
+    }
+  },
+)
 
 // Monaco Editor 옵션
 const editorOptions = {
