@@ -1,10 +1,11 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { mdiMinus, mdiPlus } from '@mdi/js'
 import { getButtonColor } from '@/colors.js'
 import BaseIcon from '@/components/BaseIcon.vue'
 import AsideMenuList from '@/components/AsideMenuList.vue'
+import { useMenuAsideStore } from '@/stores/menuAside.js'
 
 const props = defineProps({
   item: {
@@ -22,7 +23,13 @@ const asideMenuItemActiveStyle = computed(() =>
   hasColor.value ? '' : 'aside-menu-item-active font-bold',
 )
 
-const isDropdownActive = ref(false)
+const menuAsideStore = useMenuAsideStore()
+
+const isDropdownActive = ref(menuAsideStore.isOpen(props.item.label))
+
+watch(isDropdownActive, (val) => {
+  menuAsideStore.setOpen(props.item.label, val)
+})
 
 const componentClass = computed(() => [
   props.isDropdownList ? 'py-3 px-6 text-sm' : 'py-3',
