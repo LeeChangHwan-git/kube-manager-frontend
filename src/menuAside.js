@@ -13,6 +13,7 @@ import {
   mdiPalette,
   mdiReact,
   mdiKubernetes,
+  mdiRobot,
 } from '@mdi/js'
 
 export default [
@@ -47,6 +48,11 @@ export default [
     to: '/github',
     label: 'GitHub Repo',
     icon: mdiGithub,
+  },
+  {
+    to: '/ai',
+    label: 'AI',
+    icon: mdiRobot,
   },
   // {
   //   to: '/tables',

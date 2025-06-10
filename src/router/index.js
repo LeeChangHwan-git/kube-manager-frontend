@@ -55,6 +55,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'AI Assistant',
+    },
+    path: '/ai',
+    name: 'ai',
+    component: () => import('@/views/AiView.vue'),
+  },
+  {
+    meta: {
       title: 'Forms',
     },
     path: '/forms',
