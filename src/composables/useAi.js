@@ -145,6 +145,39 @@ export function useAi() {
     }
   }
 
+  // ===== 4-1. Git 레포지토리와 연동 =====
+  const gitIntegration = async () => {
+    if (!prompt.value.trim()) {
+      throw new Error('프롬프트를 입력해주세요!')
+    }
+
+    loading.value = true
+    try {
+      const response = await fetch(`${API_BASE}/git/ai`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: prompt.value,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+      }
+
+      const data = await response.json()
+      result.value = data
+      return data
+    } catch (error) {
+      console.error('Git 연동 실패:', error)
+      throw error
+    } finally {
+      loading.value = false
+    }
+  }
+
   // ===== 5. 템플릿 기반 생성 =====
   const generateWithTemplate = async (
     templateType,
@@ -470,6 +503,7 @@ export function useAi() {
     createDeployment,
     createService,
     createPod,
+    gitIntegration,
     checkAIHealth,
     checkServerHealth,
     handleError,

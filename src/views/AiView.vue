@@ -9,8 +9,17 @@ import FormControl from '@/components/FormControl.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import { useAi } from '@/composables/useAi'
 
-const { prompt, result, loading, aiConnected, generateYaml, generateAndApply, askAI, handleError } =
-  useAi()
+const {
+  prompt,
+  result,
+  loading,
+  aiConnected,
+  generateYaml,
+  generateAndApply,
+  askAI,
+  gitIntegration,
+  handleError,
+} = useAi()
 
 const onGenerate = async () => {
   try {
@@ -31,6 +40,14 @@ const onGenerateApply = async () => {
 const onAsk = async () => {
   try {
     await askAI(prompt.value)
+  } catch (err) {
+    handleError(err)
+  }
+}
+
+const onGitIntegration = async () => {
+  try {
+    await gitIntegration()
   } catch (err) {
     handleError(err)
   }
@@ -86,6 +103,12 @@ const copyToClipboard = async (text) => {
           :label="loading ? '답변 중...' : '💬 AI에게 질문'"
           color="contrast"
           @click="onAsk"
+          :disabled="loading || !prompt.trim()"
+        />
+        <BaseButton
+          :label="loading ? '처리 중...' : '🔗 git 연동'"
+          color="warning"
+          @click="onGitIntegration"
           :disabled="loading || !prompt.trim()"
         />
       </div>
@@ -202,7 +225,7 @@ const copyToClipboard = async (text) => {
         class="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg"
       >
         <h4 class="font-semibold text-blue-800 dark:text-blue-200 mb-3">💡 사용 예시</h4>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div>
             <strong class="text-blue-700 dark:text-blue-300">YAML 생성:</strong>
             <ul class="list-disc list-inside ml-2 text-blue-600 dark:text-blue-400 space-y-1">
@@ -217,6 +240,14 @@ const copyToClipboard = async (text) => {
               <li>Pod가 Pending 상태일 때 해결방법은?</li>
               <li>Ingress와 Service 차이점은?</li>
               <li>ConfigMap 사용법 알려줘</li>
+            </ul>
+          </div>
+          <div>
+            <strong class="text-blue-700 dark:text-blue-300">Git 연동:</strong>
+            <ul class="list-disc list-inside ml-2 text-blue-600 dark:text-blue-400 space-y-1">
+              <li>github.com/user/k8s-app 레포에서 deployment.yaml 적용해줘</li>
+              <li>https://gitlab.com/team/project의 service.yaml 배포해줘</li>
+              <li>github.com/company/manifests에서 ingress.yaml 생성해줘</li>
             </ul>
           </div>
         </div>
@@ -257,7 +288,7 @@ pre::-webkit-scrollbar-thumb:hover {
     flex-direction: column;
   }
 
-  .grid-cols-1.md\:grid-cols-2 {
+  .grid-cols-1.md\:grid-cols-3 {
     grid-template-columns: 1fr;
   }
 }
